@@ -95,6 +95,21 @@ To get a local copy up and running, follow these simple steps.
 5. **Open in browser**
    Navigate to `http://localhost:5173` in your browser.
 
+### Docker (Alternative)
+
+If you prefer to run the application using Docker, you can build and run the image using the following commands:
+
+1. **Build the image**
+   ```bash
+   docker pull vishwasgowdahv/news-webapp
+   docker build -t news-webapp .
+   ```
+
+2. **Run the container**
+   ```bash
+   docker run -p 4173:4173 -e NEWSAPI_KEY=your_actual_api_key_here news-webapp
+   ```
+
 ## ☁️ Deployment
 
 This project is configured to be easily deployed on [Vercel](https://vercel.com).

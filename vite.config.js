@@ -38,6 +38,33 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    preview: {
+      host: true,
+      port: 4173,
+      proxy: {
+        '/api/news': {
+          target: 'https://newsapi.org',
+          changeOrigin: true,
+          rewrite: (path) => {
+            const qs = path.split('?')[1] || ''
+            const params = new URLSearchParams(qs)
+            params.set('country', 'us')
+            params.set('apiKey', apiKey)
+            return `/v2/top-headlines?${params.toString()}`
+          },
+        },
+        '/api/search': {
+          target: 'https://newsapi.org',
+          changeOrigin: true,
+          rewrite: (path) => {
+            const qs = path.split('?')[1] || ''
+            const params = new URLSearchParams(qs)
+            params.set('apiKey', apiKey)
+            return `/v2/top-headlines?${params.toString()}`
+          },
+        },
+      },
+    },
   }
 })
 
