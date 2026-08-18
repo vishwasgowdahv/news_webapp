@@ -27,13 +27,12 @@ function App() {
   const pageSize = 9;
   let totalResults = 34;
 
-  // ENV's
-  const apikey = import.meta.env.VITE_API_KEY;
+  // API calls go through /api/* serverless proxy (key is server-side only)
 //********************  FUNCTIONS  **********************************************
   const fetchnews = async () => {
     setProgress(progress + 10);
     const apires = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apikey}&page=${page}&category=${cate}&pageSize=${pageSize}`
+      `/api/news?category=${cate}&page=${page}&pageSize=${pageSize}`
     );
     setProgress(60);
     const jsonres = await apires.json();
@@ -44,8 +43,9 @@ function App() {
   };
 
   const searchNews = async () => {
+    if (!query) return;
     const apires = await fetch(
-      `https://newsapi.org/v2/top-headlines?apiKey=${apikey}&q=${query}`
+      `/api/search?q=${encodeURIComponent(query)}&pageSize=${pageSize}`
     );
     const jsonres = await apires.json();
     setPage(1);
@@ -75,7 +75,6 @@ function App() {
         onLoaderFinished={() => setProgress(0)}
       />
       <Hero
-        apikey={apikey}
         totalResults={totalResults}
         lastPage={lastPage}
         page={page}

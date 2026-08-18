@@ -6,7 +6,6 @@ export default function Hero(props) {
   
     // Props
   const {
-    apikey,
     query,
     cate,
     pageSize,
@@ -24,9 +23,7 @@ export default function Hero(props) {
   // Functions
   const fetchMore = async () => {
     const apires = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apikey}&page=${
-        page + 1
-      }&category=${cate}&pageSize=${pageSize}`
+      `/api/news?category=${cate}&page=${page + 1}&pageSize=${pageSize}`
     );
     setPage((page) => page + 1);
     const jsonres = await apires.json();
